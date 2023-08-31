@@ -9,7 +9,7 @@ import os
 from torch.utils.data import random_split
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--seed', type=int, default=777,
+parser.add_argument('--seed', type=int, default=780,
                     help='seed')
 parser.add_argument('--batch_size', type=int, default=128,
                     help='batch size')
@@ -55,7 +55,9 @@ val_loader = DataLoader(
     validation_set, batch_size=args.batch_size, shuffle=False)
 test_loader = DataLoader(test_set, batch_size=1,
                          shuffle=False)
+
 model = Net(args).to(args.device)
+
 optimizer = torch.optim.Adam(
     model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 

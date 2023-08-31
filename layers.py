@@ -7,7 +7,7 @@ from nucleus import nucleusSample
 
 
 class SAGPool(torch.nn.Module):
-    def __init__(self, in_channels, ratio=0.8, Conv=GCNConv, non_linearity=torch.tanh):
+    def __init__(self, in_channels, ratio, Conv=GCNConv, non_linearity=torch.tanh):
         super(SAGPool, self).__init__()
         self.in_channels = in_channels
         self.ratio = ratio
@@ -21,7 +21,7 @@ class SAGPool(torch.nn.Module):
         score = self.score_layer(x, edge_index).squeeze()
 
         perm = topk(score, self.ratio, batch)
-        # perm = nucleusSample(score, 0.9)
+        # perm = nucleusSample(score, self.ratio, batch)
         x = x[perm] * self.non_linearity(score[perm]).view(-1, 1)
         batch = batch[perm]
         edge_index, edge_attr = filter_adj(
