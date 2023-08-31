@@ -23,7 +23,7 @@ def nucleusSample(
     index = torch.arange(batch.size(0), dtype=torch.long, device=x.device)
     index = (index - cum_num_nodes[batch]) + (batch * max_num_nodes)
 
-    dense_x = x.new_full((batch_size * max_num_nodes, ), -100.0)
+    dense_x = x.new_full((batch_size * max_num_nodes, ), -60000.0)
     dense_x[index] = x
     dense_x = dense_x.view(batch_size, max_num_nodes)
 

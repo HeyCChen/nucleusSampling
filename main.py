@@ -9,7 +9,7 @@ import os
 from torch.utils.data import random_split
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--seed', type=int, default=780,
+parser.add_argument('--seed', type=int, default=777,
                     help='seed')
 parser.add_argument('--batch_size', type=int, default=128,
                     help='batch size')
