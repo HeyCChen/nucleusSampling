@@ -20,8 +20,8 @@ class SAGPool(torch.nn.Module):
         # x = x.unsqueeze(-1) if x.dim() == 1 else x
         score = self.score_layer(x, edge_index).squeeze()
 
-        # perm = topk(score, self.ratio, batch)
-        perm = nucleusSample(score, self.ratio, batch)
+        perm = topk(score, self.ratio, batch)
+        # perm = nucleusSample(score, self.ratio, batch)
         x = x[perm] * self.non_linearity(score[perm]).view(-1, 1)
         batch = batch[perm]
         edge_index, edge_attr = filter_adj(

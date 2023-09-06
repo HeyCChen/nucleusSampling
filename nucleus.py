@@ -35,6 +35,7 @@ def nucleusSample(
 
     nucleus = (cum_probs < ratio)+0
     k = torch.count_nonzero(nucleus, dim=1).reshape(-1)
+    k = torch.clamp(k, min=1)
 
     perm = perm + cum_num_nodes.view(-1, 1)
     perm = perm.view(-1)
