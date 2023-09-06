@@ -21,6 +21,6 @@
 	
 for seed in 777 778 779 780 781 782 783 784 785 786
 do
-	python main.py --seed $seed
+	python main.py --seed $seed --epochs 5
 done
 

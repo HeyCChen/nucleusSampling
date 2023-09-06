@@ -18,10 +18,11 @@ def results_to_file(args, test_acc):
 
         os.makedirs('./results/{}'.format(args.dataset))
 
+
     filename = "./results/{}/result_{}.csv".format(
         args.dataset, args.seed)
 
-    headerList = ["Method", "Run-id",
+    headerList = ["Method", "Seed-id",
                   "::::::::",
                   "test_acc"]
 

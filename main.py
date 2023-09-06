@@ -25,7 +25,7 @@ parser.add_argument('--pooling_ratio', type=float, default=0.5,
                     help='pooling ratio')
 parser.add_argument('--dropout_ratio', type=float, default=0.5,
                     help='dropout ratio')
-parser.add_argument('--dataset', type=str, default='NCI1',
+parser.add_argument('--dataset', type=str, default='NCI109',
                     help='DD/PROTEINS/NCI1/NCI109/Mutagenicity')
 parser.add_argument('--epochs', type=int, default=100000,
                     help='maximum number of epochs')
