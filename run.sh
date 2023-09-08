@@ -3,14 +3,16 @@
 # echo "python main.py --configs $config --num_workers 0 --devices $CUDA_VISIBLE_DEVICES"
 # CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES python main.py --configs $config --num_workers 8 --devices $CUDA_VISIBLE_DEVICES
 
-
-for method in NUCLEUS TOPK
+for data in NCI1 NCI109 DD PROTEINS Mutagenicity
 do
-	for seed in 777 778 779 780 781 782 783 784 785 786
+	for method in NUCLEUS TOPK
 	do
-		for ratio in 0.5 0.8
+		for seed in 777 778 779 780 781 782 783 784 785 786
 		do
-			python main.py --seed $seed --sampling_method $method --pooling_ratio $ratio --epochs 1
+			for ratio in 0.5 0.8
+			do
+				python main.py --seed $seed --sampling_method $method --pooling_ratio $ratio
+			done
 		done
 	done
 done
