@@ -11,7 +11,7 @@ do
 		do
 			for ratio in 0.5 0.8
 			do
-				python main.py --seed $seed --sampling_method $method --pooling_ratio $ratio
+				python main.py --dataset $data --seed $seed --sampling_method $method --pooling_ratio $ratio
 			done
 		done
 	done
