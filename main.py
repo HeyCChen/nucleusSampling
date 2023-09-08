@@ -7,11 +7,11 @@ import torch.nn.functional as F
 import argparse
 import os
 from torch.utils.data import random_split
-from utils import results_to_file
+from utils import results_to_compare, results_to_file
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--seed', type=int, default=778,
+parser.add_argument('--seed', type=int, default=777,
                     help='seed')
 parser.add_argument('--batch_size', type=int, default=128,
                     help='batch size')
@@ -98,7 +98,8 @@ def test(loader):
 
 run_name = f"{args.dataset}"
 run_method = f"{args.sampling_method}"
-args.save_path = f"exps/{run_name}/{run_method}"
+run_ratio = f"{args.pooling_ratio}"
+args.save_path = f"exps/{run_name}/{run_method}/ratio-{run_ratio}"
 os.makedirs(os.path.join(args.save_path, str(args.seed)), exist_ok=True)
 
 best_val = 0
@@ -131,3 +132,6 @@ test_acc = test(test_loader)
 print("Seed{} Test accuarcy:{}".format(args.seed, test_acc))
 
 results_to_file(args, test_acc)
+
+if args.seed == 786:
+    results_to_compare(args)
