@@ -11,7 +11,7 @@ from utils import results_to_file
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--seed', type=int, default=777,
+parser.add_argument('--seed', type=int, default=778,
                     help='seed')
 parser.add_argument('--batch_size', type=int, default=128,
                     help='batch size')
@@ -25,7 +25,7 @@ parser.add_argument('--pooling_ratio', type=float, default=0.5,
                     help='pooling ratio')
 parser.add_argument('--dropout_ratio', type=float, default=0.5,
                     help='dropout ratio')
-parser.add_argument('--dataset', type=str, default='NCI109',
+parser.add_argument('--dataset', type=str, default='NCI1',
                     help='DD/PROTEINS/NCI1/NCI109/Mutagenicity')
 parser.add_argument('--epochs', type=int, default=100000,
                     help='maximum number of epochs')
@@ -33,6 +33,8 @@ parser.add_argument('--patience', type=int, default=50,
                     help='patience for earlystopping')
 parser.add_argument('--pooling_layer_type', type=str, default='GCNConv',
                     help='DD/PROTEINS/NCI1/NCI109/Mutagenicity')
+parser.add_argument('--sampling_method', type=str, default='topk',
+                    help='TOPK/NUCLEUS')
 
 args = parser.parse_args()
 args.device = 'cpu'
@@ -73,7 +75,6 @@ def train(epoch):
         optimizer.zero_grad()
         out = model(data)
         loss = F.cross_entropy(out, data.y)
-        # loss = (out.squeeze() - data.y).abs().mean()
         loss.backward()
 
         total_loss += loss.item() * data.num_graphs
@@ -96,7 +97,8 @@ def test(loader):
 
 
 run_name = f"{args.dataset}"
-args.save_path = f"exps/{run_name}"
+run_method = f"{args.sampling_method}"
+args.save_path = f"exps/{run_name}/{run_method}"
 os.makedirs(os.path.join(args.save_path, str(args.seed)), exist_ok=True)
 
 best_val = 0
@@ -111,7 +113,6 @@ for epoch in range(1, args.epochs+1):
 
     if best_val < val_acc:
         best_val = val_acc
-        # final_test = test_acc
         torch.save(state_dict, os.path.join(
             args.save_path, str(args.seed), "best_model.pt"))
         print(f'Epoch: {epoch:02d}, Loss: {loss:.4f}, Val: {val_acc:.4f}, '

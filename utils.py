@@ -18,9 +18,8 @@ def results_to_file(args, test_acc):
 
         os.makedirs('./results/{}'.format(args.dataset))
 
-
-    filename = "./results/{}/result_{}.csv".format(
-        args.dataset, args.seed)
+    filename = "./results/{}/{}.csv".format(
+        args.dataset, args.sampling_method,)
 
     headerList = ["Method", "Seed-id",
                   "::::::::",
@@ -38,7 +37,7 @@ def results_to_file(args, test_acc):
             dw.writeheader()
 
         line = "{}, {}, :::::::::, {:.4f}\n".format(
-            args.dataset, args.seed,
+            args.sampling_method, args.seed,
             test_acc
         )
         f.write(line)

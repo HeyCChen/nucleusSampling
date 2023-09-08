@@ -15,13 +15,17 @@ class Net(torch.nn.Module):
         self.num_classes = args.num_classes
         self.pooling_ratio = args.pooling_ratio
         self.dropout_ratio = args.dropout_ratio
+        self.sampling_method = args.sampling_method
 
         self.conv1 = GCNConv(self.num_features, self.nhid)
-        self.pool1 = SAGPool(self.nhid, ratio=self.pooling_ratio)
+        self.pool1 = SAGPool(
+            self.nhid, ratio=self.pooling_ratio, sampling_method=self.sampling_method)
         self.conv2 = GCNConv(self.nhid, self.nhid)
-        self.pool2 = SAGPool(self.nhid, ratio=self.pooling_ratio)
+        self.pool2 = SAGPool(
+            self.nhid, ratio=self.pooling_ratio, sampling_method=self.sampling_method)
         self.conv3 = GCNConv(self.nhid, self.nhid)
-        self.pool3 = SAGPool(self.nhid, ratio=self.pooling_ratio)
+        self.pool3 = SAGPool(
+            self.nhid, ratio=self.pooling_ratio, sampling_method=self.sampling_method)
 
         self.lin1 = torch.nn.Linear(self.nhid*2, self.nhid)
         self.lin2 = torch.nn.Linear(self.nhid, self.nhid//2)
