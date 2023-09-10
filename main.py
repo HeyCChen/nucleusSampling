@@ -26,14 +26,14 @@ parser.add_argument('--pooling_ratio', type=float, default=0.5,
 parser.add_argument('--dropout_ratio', type=float, default=0.5,
                     help='dropout ratio')
 parser.add_argument('--dataset', type=str, default='NCI1',
-                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity')
+                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/COLLAB')
 parser.add_argument('--epochs', type=int, default=100000,
                     help='maximum number of epochs')
 parser.add_argument('--patience', type=int, default=50,
                     help='patience for earlystopping')
 parser.add_argument('--pooling_layer_type', type=str, default='GCNConv',
-                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity')
-parser.add_argument('--sampling_method', type=str, default='topk',
+                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/COLLAB')
+parser.add_argument('--sampling_method', type=str, default='NUCLEUS',
                     help='TOPK/NUCLEUS')
 
 args = parser.parse_args()
