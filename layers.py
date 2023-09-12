@@ -4,6 +4,7 @@ from torch.nn import Parameter
 import torch
 
 from nucleus import nucleusSample
+from tailfree import tailfreeSample
 
 
 class SAGPool(torch.nn.Module):
@@ -25,6 +26,8 @@ class SAGPool(torch.nn.Module):
             perm = topk(score, self.ratio, batch)
         elif self.sampling_method == 'NUCLEUS':
             perm = nucleusSample(score, self.ratio, batch)
+        elif self.sampling_method == 'TAILFREE':
+            perm = tailfreeSample(score, self.ratio, batch)
 
         x = x[perm] * self.non_linearity(score[perm]).view(-1, 1)
         batch = batch[perm]

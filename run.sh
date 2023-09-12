@@ -5,7 +5,7 @@
 
 for data in NCI1 NCI109 DD PROTEINS Mutagenicity
 do
-	for method in NUCLEUS TOPK
+	for method in NUCLEUS TOPK TAILFREE
 	do
 		for seed in 777 778 779 780 781 782 783 784 785 786
 		do

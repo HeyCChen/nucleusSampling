@@ -34,7 +34,7 @@ parser.add_argument('--patience', type=int, default=50,
 parser.add_argument('--pooling_layer_type', type=str, default='GCNConv',
                     help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/COLLAB')
 parser.add_argument('--sampling_method', type=str, default='NUCLEUS',
-                    help='TOPK/NUCLEUS')
+                    help='TOPK/NUCLEUS/TAILFREE')
 
 args = parser.parse_args()
 args.device = 'cpu'

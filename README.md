@@ -1,3 +1,3 @@
 ## Usage
 
-```python main.py```
+```sh run.sh```
