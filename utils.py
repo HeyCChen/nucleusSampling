@@ -58,7 +58,7 @@ def results_to_compare(args):
         os.makedirs('./results/{}'.format(args.dataset))
 
     resultname = "./results/{}/compare.csv".format(args.dataset)
-    headerList = ["Method", "Pooling-ratio", "Mean", "Var", "Std"]
+    headerList = ["Method", "Pooling-ratio", "Mean", "Std"]
 
     with open(resultname, "a+") as f:
         f.seek(0)
@@ -68,8 +68,8 @@ def results_to_compare(args):
                                 fieldnames=headerList)
             dw.writeheader()
 
-        line = "{},{},{:.4f},{:.6f},{:.6f}\n".format(
+        line = "{},{},{:.4f},{:.6f}\n".format(
             args.sampling_method, args.pooling_ratio,
-            mean, var, std
+            mean, std
         )
         f.write(line)
