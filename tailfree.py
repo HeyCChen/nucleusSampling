@@ -29,7 +29,6 @@ def tailfreeSample(
     dense_x = x.new_full((batch_size * max_num_nodes, ), -60000.0)
     dense_x[index] = x
     dense_x = dense_x.view(batch_size, max_num_nodes)
-    logits = dense_x
 
     dense_x = softmax(dense_x)
     probs, perm = dense_x.sort(dim=-1, descending=True)
@@ -50,15 +49,8 @@ def tailfreeSample(
     cum_weights = (torch.cumsum(sec_weights, dim=1) > 0.9)+0
 
     tail_ids = torch.argmax(cum_weights, dim=1)+1
-    tail_ids = tail_ids.view(-1, 1)
-    tail_min_vals = torch.gather(logits, dim=1, index=tail_ids)
-
-    pruned = (logits > tail_min_vals)+0
-
-    num_nozero = torch.count_nonzero(pruned, dim=1).reshape(-1).to(torch.int)
-    topk = (0.5 * num_nodes).ceil().to(torch.int)
-    k = torch.where(num_nozero < topk, num_nozero, topk)
-    k = torch.clamp(k, min=1)
+    k = (float(ratio) * tail_ids).ceil().to(torch.int)
+    k = torch.clamp(tail_ids, min=1)
 
     index = torch.cat([
         torch.arange(k[i], device=x.device) + i * max_num_nodes

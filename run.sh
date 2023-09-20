@@ -5,7 +5,7 @@
 
 for data in NCI1 NCI109 DD PROTEINS Mutagenicity MUTAG ENZYMES
 do
-	for method in TAILFREE # NUCLEUS TOPK 
+	for method in ITS TOPK NUCLEUS TAILFREE  
 	do
 		for seed in 777 778 779 780 781 782 783 784 785 786
 		do
@@ -16,7 +16,14 @@ do
 			then python main.py --dataset $data --seed $seed --sampling_method TOPK --pooling_ratio 0.5
 			fi
 			if [ "$method" = "TAILFREE" ]
-			then python main.py --dataset $data --seed $seed --sampling_method TAILFREE --pooling_ratio 0.9
+			then python main.py --dataset $data --seed $seed --sampling_method TAILFREE --pooling_ratio 0.8
+			fi
+			if [ "$method" = "ITS" ]
+			then
+			for ratio in 0.5 0.6
+			do
+				python main.py --dataset $data --seed $seed --sampling_method ITS --pooling_ratio $ratio
+			done
 			fi
 		done
 	done

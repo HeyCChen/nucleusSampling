@@ -1,10 +1,10 @@
 from torch_geometric.nn import GCNConv
-from torch_geometric.nn.pool.topk_pool import topk, filter_adj
-from torch.nn import Parameter
+from torch_geometric.nn.pool.topk_pool import filter_adj, topk
 import torch
 
 from nucleus import nucleusSample
 from tailfree import tailfreeSample
+from inverse import inverse_transform_sampling as inverse
 
 
 class SAGPool(torch.nn.Module):
@@ -28,6 +28,8 @@ class SAGPool(torch.nn.Module):
             perm = nucleusSample(score, self.ratio, batch)
         elif self.sampling_method == 'TAILFREE':
             perm = tailfreeSample(score, self.ratio, batch)
+        elif self.sampling_method == 'ITS':
+            perm = inverse(score, self.ratio, batch)
 
         x = x[perm] * self.non_linearity(score[perm]).view(-1, 1)
         batch = batch[perm]

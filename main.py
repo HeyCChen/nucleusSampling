@@ -1,7 +1,6 @@
 import torch
 from torch_geometric.datasets import TUDataset
 from torch_geometric.data import DataLoader
-from torch_geometric import utils
 from networks import Net
 import torch.nn.functional as F
 import argparse
@@ -26,22 +25,23 @@ parser.add_argument('--pooling_ratio', type=float, default=0.5,
 parser.add_argument('--dropout_ratio', type=float, default=0.5,
                     help='dropout ratio')
 parser.add_argument('--dataset', type=str, default='NCI1',
-                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/COLLAB')
+                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/ENZYMES/MUTAG')
 parser.add_argument('--epochs', type=int, default=100000,
                     help='maximum number of epochs')
 parser.add_argument('--patience', type=int, default=50,
                     help='patience for earlystopping')
 parser.add_argument('--pooling_layer_type', type=str, default='GCNConv',
-                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/COLLAB')
+                    help='DD/PROTEINS/NCI1/NCI109/Mutagenicity/ENZYMES/MUTAG')
 parser.add_argument('--sampling_method', type=str, default='NUCLEUS',
-                    help='TOPK/NUCLEUS/TAILFREE')
+                    help='TOPK/NUCLEUS/TAILFREE/ITS')
 
 args = parser.parse_args()
-args.device = 'cpu'
+args.device = torch.device('cuda:{}'.format(
+    1) if torch.cuda.is_available() else 'cpu')
 torch.manual_seed(args.seed)
+
 if torch.cuda.is_available():
     torch.cuda.manual_seed(args.seed)
-    args.device = 'cuda:1'
 dataset = TUDataset(os.path.join('data', args.dataset), name=args.dataset)
 args.num_classes = dataset.num_classes
 args.num_features = dataset.num_features
