@@ -3,7 +3,7 @@
 # echo "python main.py --configs $config --num_workers 0 --devices $CUDA_VISIBLE_DEVICES"
 # CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES python main.py --configs $config --num_workers 8 --devices $CUDA_VISIBLE_DEVICES
 
-for data in NCI1 NCI109 DD PROTEINS Mutagenicity MUTAG ENZYMES
+for data in IMDB-BINARY IMDB-MULTI COLLAB # NCI1 NCI109 DD PROTEINS Mutagenicity MUTAG ENZYMES
 do
 	for method in ITS TOPK NUCLEUS TAILFREE  
 	do

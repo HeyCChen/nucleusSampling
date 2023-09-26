@@ -1,12 +1,15 @@
+import random
 import torch
 from torch_geometric.datasets import TUDataset
 from torch_geometric.data import DataLoader
+from data import get_dataset
 from networks import Net
 import torch.nn.functional as F
 import argparse
 import os
 from torch.utils.data import random_split
 from utils import results_to_compare, results_to_file
+import numpy as np
 
 parser = argparse.ArgumentParser()
 
@@ -37,12 +40,16 @@ parser.add_argument('--sampling_method', type=str, default='NUCLEUS',
 
 args = parser.parse_args()
 args.device = torch.device('cuda:{}'.format(
-    1) if torch.cuda.is_available() else 'cpu')
+    0) if torch.cuda.is_available() else 'cpu')
+random.seed(args.seed)
+np.random.seed(args.seed)
 torch.manual_seed(args.seed)
+torch.cuda.manual_seed_all(args.seed)
 
 if torch.cuda.is_available():
     torch.cuda.manual_seed(args.seed)
-dataset = TUDataset(os.path.join('data', args.dataset), name=args.dataset)
+
+dataset = get_dataset(args.dataset)
 args.num_classes = dataset.num_classes
 args.num_features = dataset.num_features
 
